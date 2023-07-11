@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Comedy Memes</title>
+    <style>
+        #meme-container {
+            text-align: center;
+        }
+        #meme-image {
+            max-width: 500px;
+            max-height: 500px;
+            margin: 20px;
+        }
+        #generate-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="meme-container">
+        <img id="meme-image" src="https://i.imgflip.com/3ch6o2.jpg?a469008" alt="Comedy Meme">
+        <button id="generate-button">Generate Meme</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    $("#generate-button").click(function() {
+        // Make a GET request to the API
+        $.ajax({
+            url: "https://api.imgflip.com/get_memes",
+            type: "GET",
+            success: function(response) {
+                // Get a random meme from the response
+                var memes = response.data.memes;
+                var randomMeme = memes[Math.floor(Math.random() * memes.length)];
+
+                // Display the meme image
+                $("#meme-image").attr("src", randomMeme.url);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error:", error);
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
